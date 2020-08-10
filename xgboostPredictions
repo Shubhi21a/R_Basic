@@ -1,0 +1,35 @@
+library(data.table)
+library(xgboost)
+
+Testing <- fread("filePath_NewData.csv) # Read the data that you trained your model on # This will have the y label too
+
+Testing <- fread("filePath_TrainingDate.csv) # Read the data that you want to predict for  # This won't have y label , you will be predicting that using the model
+# df is named Testing, but this is not the test set for checking model performance. 
+# This is us using our model for predictions on new set, post paramter tuning, checking confusion matrix etc.
+
+names(Training)
+names(Testing) 
+str(Training)
+str(Testing) 
+# names, order of columns, data type of variables should be identical to training set
+
+traindataxg <- as.matrix(Training[,-c(1)]) # y label/ flag is the 1st column, removing that
+testdataxg <- as.matrix(Testing) # will not have a y label
+
+trainxglabel <- Training$Flag # the y label for training set
+
+dtrain <- xgb.DMatrix(data = traindataxg,label = trainxglabel)
+dtest <- xgb.DMatrix(data = testdataxg)
+
+# Binary classification
+# used scale_pos_weight to help with class imbalance, this improved model performance significantly
+# scale_pos_weight value chosen = count of majority class/ count of minority class
+
+params <- list(booster = "gbtree", objective =  "binary:logistic", eta=0.3, gamma=0, max_depth=8,
+               min_child_weight=1, subsample=1, colsample_bytree=1,scale_pos_weight= 7,set.seed=123)
+
+xgb1 <- xgb.train(params = params ,data = dtrain, nrounds = 100,watchlist = list(train=dtrain),
+                  print_every_n = 10, early_stopping_rounds = 40, maximize = F, eval_metric = "error")
+
+xgbpred <- predict(xgb1,dtest)
+xgbpred_label <- ifelse (xgbpred > 0.38,1,0) # threshold not taken as .5, this threshold helps improve Recall, which is the metric of interest for us
