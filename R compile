@@ -1,0 +1,9 @@
+boss_pvt$TeamId_Boss <- "NA"
+boss_pvt<- boss_pvt %>% filter (!is.na(`Mgr Id`))
+
+count= 1
+# running a loop to create IDs
+for ( i in 1:nrow(boss_pvt)) {
+  boss_pvt[i,"TeamId_Boss"] <- paste0("B",count)  
+  count = count+1
+}
