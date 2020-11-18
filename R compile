@@ -3,12 +3,20 @@ f4 <- f3 %>% arrange(Category1,-metric) # - means desc order
 # https://stackoverflow.com/questions/47446303/sort-a-data-frame-based-on-multiple-columns-in-r
 
 ## Creating dynamic IDs============
-boss_pvt$TeamId_Boss <- "NA"
-boss_pvt<- boss_pvt %>% filter (!is.na(`Mgr Id`))
-
+pvt$TeamId_Boss <- "NA"
+pvt<- boss_pvt %>% filter (!is.na(`MgrId`))
 count= 1
 # running a loop to create IDs
 for ( i in 1:nrow(boss_pvt)) {
-  boss_pvt[i,"TeamId_Boss"] <- paste0("B",count)  
+  pvt[i,"TeamId_Boss"] <- paste0("B",count)  
   count = count+1
 }
+
+#### Quamtiles =====================
+calc <- f4 %>% filter(Category==1) %>%
+  group_by(`Unit`) %>% summarise(p50 = quantile(metric,probs = .5), p75 = quantile(metric,probs = .75))
+
+## basic ifelse=====================
+f5<- f5 %>% mutate(Bucket= ifelse(cat1==1 & rate > p75,"High",
+                                  ifelse(cat1==1 & rate > p50,"Medium",
+                                          ifelse(cat1==0,NA,"Low"))))
