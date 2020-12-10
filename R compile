@@ -20,3 +20,12 @@ calc <- f4 %>% filter(Category==1) %>%
 f5<- f5 %>% mutate(Bucket= ifelse(cat1==1 & rate > p75,"High",
                                   ifelse(cat1==1 & rate > p50,"Medium",
                                           ifelse(cat1==0,NA,"Low"))))
+                                          
+#### file search basis keyword=====
+setwd("E:\\folder1\folder2")
+list.files()
+flz <- list.files()
+file_use <- flz[grepl("keyword_in_filename",flz)]
+file_use
+input <- read_excel(file_use,sheet="sheetName")
+
