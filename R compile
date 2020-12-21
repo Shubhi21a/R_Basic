@@ -1,5 +1,7 @@
 ## Sorting by multiple columns==================================
 f4 <- f3 %>% arrange(Category1,-metric) # - means desc order
+tbl <- tbl[order(-tbl$colToBeSorted),]
+
 # https://stackoverflow.com/questions/47446303/sort-a-data-frame-based-on-multiple-columns-in-r
 
 ## Creating dynamic IDs============
