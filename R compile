@@ -37,4 +37,6 @@ tbl1 <- tbl1 %>% mutate(Total= rowSums(tbl1[,c('A','D,'I','M','N','S','T')],na.r
 # rowsums
 chk$Total <- rowSums(chk[2:10],na.rm=T)
 
+sum(df,na.rm=T)- sum(df$col1,na.rm=T) # can get sum of whole df ( if it's numeric) and also any column of df
+
 
