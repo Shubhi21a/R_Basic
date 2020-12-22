@@ -34,3 +34,7 @@ input <- read_excel(file_use,sheet="sheetName")
 # rowsums with dplyr
 tbl1 <- tbl1 %>% mutate(Total= rowSums(tbl1[,c('A','D,'I','M','N','S','T')],na.rm=TRUE)) # A,D,I etc are column names
 
+# rowsums
+chk$Total <- rowSums(chk[2:10],na.rm=T)
+
+
