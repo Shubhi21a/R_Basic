@@ -31,3 +31,6 @@ file_use <- flz[grepl("keyword_in_filename",flz)]
 file_use
 input <- read_excel(file_use,sheet="sheetName")
 
+# rowsums with dplyr
+tbl1 <- tbl1 %>% mutate(Total= rowSums(tbl1[,c('A','D,'I','M','N','S','T')],na.rm=TRUE)) # A,D,I etc are column names
+
