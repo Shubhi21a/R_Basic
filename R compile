@@ -42,3 +42,13 @@ sum(df,na.rm=T)- sum(df$col1,na.rm=T) # can get sum of whole df ( if it's numeri
 # another way to aggregate, if not using dplyr group by , summarize, grouping by col8, summarizing cols 5,6,7
 pivot<- aggregate(df[,c(5,6,7)], by=list(df[,c(8)]), FUN = sum, na.rm=T)
 
+# rehshape===
+library(reshape2)
+# wide to long
+costs2 <- melt(costs, id.vars = "id", variable.name = "new_col_name") # variable.name= column_name_for_values_post_collapsing_wide_columns
+field_to_make_diff_columns_from
+
+# function in R========
+# applying a function to a df, scaling ratio column is already present in costs13 df, with different value for each row
+cost_scale_fn <- function(inVal) {outVal = inVal * costs12$scaling_ratio}
+costs13[,2:ncol(costs13)] <- lapply(costs13[,2:ncol(costs13)], cost_scale_fn) # the function is applied to selected columns
