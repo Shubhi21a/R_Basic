@@ -52,3 +52,15 @@ field_to_make_diff_columns_from
 # applying a function to a df, scaling ratio column is already present in costs13 df, with different value for each row
 cost_scale_fn <- function(inVal) {outVal = inVal * costs12$scaling_ratio}
 costs13[,2:ncol(costs13)] <- lapply(costs13[,2:ncol(costs13)], cost_scale_fn) # the function is applied to selected columns
+
+## seeing structure of all relevant df using for loop
+ob_name <-as.data.frame(ls()); colnames(ob_name)[1]<-"name"
+ob_name2 <- ob_name %>% filter(name %like% 'all')
+
+names_df <- ob_name2$name
+
+for (i in names_df) {
+  df= get(i)
+  print(i)
+  print(nrow(df))
+}
