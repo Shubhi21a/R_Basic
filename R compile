@@ -64,3 +64,16 @@ for (i in names_df) {
   print(i)
   print(nrow(df))
 }
+
+
+# seeing details of some df
+ob_name <-as.data.frame(ls()); colnames(ob_name)[1]<-"name"
+ob_name2 <- ob_name %>% filter(name %like% 'all')
+
+names_df <- ob_name2$name
+for (i in names_df) {
+  df= get(i)
+  print(i)
+  print(nrow(df)) # should not be empty df
+  print(ncol(df)) # should all have 10 columns
+}
