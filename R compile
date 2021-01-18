@@ -91,3 +91,5 @@ for (i in unique(tbl$zone))
   cluster_dr <- cluster_dr[,-3]
   assign(paste0(i,"_Sal_df"),cluster_dr)
 }
+
+value_group<- dcast(df,storeID~segment,value.var="total_sales",subset = .(segment == "product1"))
