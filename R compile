@@ -93,3 +93,21 @@ for (i in unique(tbl$zone))
 }
 
 value_group<- dcast(df,storeID~segment,value.var="total_sales",subset = .(segment == "product1"))
+
+# loop
+file_list <- list()
+for (i in unique(tbl$id))
+{
+  
+  df_id <- insig_join_use  %>% filter (id== i )
+  df_id$total <- sum(df_id$val1)
+  df_id$total_cx <- sum(df_id$cxflag)
+  df_id$dr<- ifelse(df_id$total != 0,df_id$val1/df_id$total,
+                         df_id$cxflag/df_id$total_cx)
+  df_id$allotted_share<- (df_id$dr)*df_id$total_share
+  id_value<- df_id
+  compile_val<- id_val[,c("id","allotted_share","col1")]
+  file_list[[i]]<- compile_val
+}
+
+file_appended <- do.call(rbind,file_list)
