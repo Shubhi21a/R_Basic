@@ -18,6 +18,15 @@ for ( i in 1:nrow(boss_pvt)) {
   count = count+1
 }
 
+## countif across rows, if the keyword matches and storing the count as new value
+df$AL <- rowSums(df[,2:ncol(df)] == "AL")
+
+## summing from column2 till last column in df, generalizing it 
+df$total <- rowSums(df[,2:ncol(df)],na.rm=T)
+
+df$avg = rowMeans(df[c("col1","col2")],na.rm=T) # means using rowmeans
+df1 <- df %>% select(`col 1`,col2,col3,col4) # subsetting columns
+
 #### Quamtiles =====================
 calc <- f4 %>% filter(Category==1) %>%
   group_by(`Unit`) %>% summarise(p50 = quantile(metric,probs = .5), p75 = quantile(metric,probs = .75))
