@@ -8,6 +8,13 @@ tbl <- tbl[order(-tbl$colToBeSorted),]
 
 # https://stackoverflow.com/questions/47446303/sort-a-data-frame-based-on-multiple-columns-in-r
 
+# connecting to SQL in R
+library(RODBC)
+library(sqldf)  
+conn <-  odbcDriverConnect('driver={SQL Server};server=11.22.33.44,12345;database=DB_name;trusted_connection=true')
+df <- sqlQuery(conn,paste("select top 5 * from tbl_name where col1 in ('cat1','cat2')"))
+
+
 ## Creating dynamic IDs============
 pvt$TeamId_Boss <- "NA"
 pvt<- boss_pvt %>% filter (!is.na(`MgrId`))
