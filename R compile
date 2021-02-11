@@ -8,6 +8,11 @@ tbl <- tbl[order(-tbl$colToBeSorted),]
 
 # https://stackoverflow.com/questions/47446303/sort-a-data-frame-based-on-multiple-columns-in-r
 
+# converting Character field (originially date in excel) into date in R
+br11$Date_col <- as.integer(br11$Date_col)
+br11$Date_col <- as.Date(br11$Date_col,origin = "1899-12-30")
+
+
 # connecting to SQL in R
 library(RODBC)
 library(sqldf)  
