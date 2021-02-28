@@ -1,0 +1,13 @@
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+
+#f1 <- readLines(file("stdin"))
+f1 <- scan("stdin")
+#f1
+f2 <- as.data.frame(f1)
+colnames(f2)[1] <- "data"; f2$flag <- 1
+library(dplyr)
+f3 <- f2 %>% group_by (data) %>% summarize(count = sum(flag), pair = floor(count/2))
+#f3
+output <- sum(f3$pair)
+# write(output,stdout()) # this/the below either works
+cat(output)
