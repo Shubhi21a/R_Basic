@@ -153,3 +153,5 @@ grp2 <- subset(df,sample==FALSE)
 library(writexl)
 getwd();setwd("F:\\aa\\bb\\cc")
 write_xlsx(list(sheet1=grp1,sheet2=grp2),"FileName.xlsx")
+
+df<- df %>% mutate_if(is.factor, as.character)
