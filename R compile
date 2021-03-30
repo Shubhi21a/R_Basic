@@ -1,3 +1,5 @@
+str(df,list.len = ncol(df))
+
 # sorting: date
 df<- df[rev(order(df$order_date)),] # sorting in desc order, latest order first
 
