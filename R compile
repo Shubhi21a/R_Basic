@@ -7,6 +7,9 @@ f1$vintage_days<-Sys.Date()-f1$create_date
 
 f2<- arrange(f1,desc(vintage_days))
 
+# https://stackoverflow.com/questions/27354734/dplyr-mutate-rowsums-calculations-or-custom-functions
+iris %>% mutate(sumVar = rowSums(.[1:4]))
+
 
 ## Sorting by multiple columns==================================
 f4 <- f3 %>% arrange(Category1,-metric) # - means desc order
