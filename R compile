@@ -164,3 +164,19 @@ df3 <- subset(df1,select= c)
 
 first_day<- strftime(today(), format="%Y-%m-01") # first day of current month
 date6m <- first_day %m-% months(6) # date 6 months ago
+
+df1 <-  df[ ,colnames(df) %in% keep_col, with=FALSE]
+
+df<- rapply( df, f=function(x) ifelse(is.nan(x),0,x), how="replace" )
+
+zerodf <- na.omit(zerodf)
+
+setdiff(colnames(df),colnames(df)) # tells differing column names
+intersect( colnames(df),  colnames(df)) # Tells common names in the two df
+
+
+df$Month <- strftime(df$b_date,"%b_%Y") # to get month, year from date
+
+df[is.na(df$col1),]$col1<-0
+
+all_list1a<- rapply( all_list1a, f=function(x) ifelse(is.nan(x),0,x), how="replace" )
