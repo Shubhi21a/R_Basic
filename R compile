@@ -158,3 +158,9 @@ getwd();setwd("F:\\aa\\bb\\cc")
 write_xlsx(list(sheet1=grp1,sheet2=grp2),"FileName.xlsx")
 
 df<- df %>% mutate_if(is.factor, as.character)
+
+c<- intersect(colnames(df1),colnames(df2))
+df3 <- subset(df1,select= c)
+
+first_day<- strftime(today(), format="%Y-%m-01") # first day of current month
+date6m <- first_day %m-% months(6) # date 6 months ago
