@@ -114,16 +114,16 @@ for (i in names_df) {
 
 for (i in unique(tbl$zone)) 
 {
-  cluster<- dcast(tbl,id~segment,value.var="avgMAB",subset = .(cluster == i,segment=="Salary"))
-  colSums(is.na(cluster))
-  cluster[is.na(cluster)] = 0
+  dr<- dcast(tbl,id~segment,value.var="avgMAB",subset = .(cluster == i,segment=="abc"))
+  colSums(is.na(dr))
+  dr[is.na(dr)] = 0
   
-  cluster_dr <- cluster
-  cluster_dr$Grandtotal = sum(cluster_dr[,2])
+  dr_use <- dr
+  dr_use$Grandtotal = sum(dr_use[,2])
   
-  cluster_dr <- cluster_dr %>% mutate (Sal=(Sal/Grandtotal) )
-  cluster_dr <- cluster_dr[,-3]
-  assign(paste0(i,"_Sal_df"),cluster_dr)
+  dr_use <- dr_use %>% mutate (abc=(abc/Grandtotal) )
+  dr_use <- dr_use[,-3]
+  assign(paste0(i,"_abc_df"),dr_use)
 }
 
 value_group<- dcast(df,storeID~segment,value.var="total_sales",subset = .(segment == "product1"))
@@ -133,7 +133,7 @@ file_list <- list()
 for (i in unique(tbl$id))
 {
   
-  df_id <- insig_join_use  %>% filter (id== i )
+  df_id <- df_use  %>% filter (id== i )
   df_id$total <- sum(df_id$val1)
   df_id$total_cx <- sum(df_id$cxflag)
   df_id$dr<- ifelse(df_id$total != 0,df_id$val1/df_id$total,
