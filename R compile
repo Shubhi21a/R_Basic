@@ -180,3 +180,16 @@ df$Month <- strftime(df$b_date,"%b_%Y") # to get month, year from date
 df[is.na(df$col1),]$col1<-0
 
 all_list1a<- rapply( all_list1a, f=function(x) ifelse(is.nan(x),0,x), how="replace" )
+
+# ================to split a file in to equal parts basis a column
+ library(Hmisc) # for cut2
+groups <- split(file, cut2(file$column_name, g=5))
+# g tells the number of splits we want to make
+
+
+# ============Removing selected (most of the objects)
+a<- ls() ;a
+b <- a[!a %in% c("var1_tobekept","var2_tobekept","var3_tobekept")]  # all but these objects
+
+rm(list=b) # removing everything but the above mentioned objects, coz we are re-using objects 
+rm(a)
