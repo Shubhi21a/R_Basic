@@ -193,3 +193,14 @@ b <- a[!a %in% c("var1_tobekept","var2_tobekept","var3_tobekept")]  # all but th
 
 rm(list=b) # removing everything but the above mentioned objects, coz we are re-using objects 
 rm(a)
+
+
+#================= Percentile for multiple columns=============
+# single col
+quantile(df$col,probs = c(0,0.5,0.99), na.rm=T)
+
+quants <- c(0,0.01,0.05,0.10,0.25,0.50,0.75,0.90,0.95,0.99,1)
+quantile(df$col,probs = quants, na.rm=T)
+
+p1 <- apply(df[2:5],2,quantile,probs=quants,na.rm=T)
+p2 <- t(as.data.frame(apply(df[2:5],2,quantile,probs=quants,na.rm=T))
