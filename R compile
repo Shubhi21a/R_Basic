@@ -195,6 +195,9 @@ rm(list=b) # removing everything but the above mentioned objects, coz we are re-
 rm(a)
 
 
+############# keeping only num cols============
+df2 <- df1 %>% select(where(is.numeric))
+
 #================= Percentile for multiple columns=============
 # single col
 quantile(df$col,probs = c(0,0.5,0.99), na.rm=T)
