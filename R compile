@@ -207,3 +207,37 @@ quantile(df$col,probs = quants, na.rm=T)
 
 p1 <- apply(df[2:5],2,quantile,probs=quants,na.rm=T)
 p2 <- t(as.data.frame(apply(df[2:5],2,quantile,probs=quants,na.rm=T))
+
+
+### GBM
+library(gbm)
+?gbm 
+
+str(i4)
+
+i5 <- i4
+i5[is.na(i5)] <- 0 # NAs get replaced with 0
+colSums(is.na(i5))
+
+train <- i5
+# 0/1 Dependent variable- flag_col - numeric data type. Does not have to be converted to factor.
+
+start_time <- Sys.time()
+fit_gbm <- gbm(flag_col ~., distribution = "bernoulli",data=train,n.trees=500,interaction.depth = 4)
+# for regression, the distribution = "gaussian"
+
+end_time <- Sys.time()
+end_time - start_time
+
+gbm::summary.gbm(fit_gbm,plotit = FALSE)
+gbm::summary.gbm(fit_gbm,plotit = TRUE)
+
+test$pred_gbm<-predict(object=fit_gbm,newdata=test,type="response") 
+# add type="response" to get probabilities as output
+test$pred_gbm_class = ifelse(test$pred_gbm > 0.5,1,0) # converting prob. to 0/1
+
+chk <- test %>% select(pred_gbm,pred_gbm_class,flag_col)
+table(test$flag_col)
+table(test$pred_gbm_class)
+
+table(test$flag_col,test$pred_gbm_class)
